@@ -17,6 +17,8 @@ use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\Profile\ProfileScreen;
+use App\Orchid\Screens\ProfessionalRole\ProfessionalRoleListScreen;
+use App\Orchid\Screens\Skill\SkillListScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
@@ -83,6 +85,20 @@ Route::screen('roles', RoleListScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push(__('Roles'), route('platform.systems.roles')));
+
+// Platform > Master > Professional Roles
+Route::screen('master/professional-roles', ProfessionalRoleListScreen::class)
+    ->name('platform.master.professional_roles')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Peran Profesi', route('platform.master.professional_roles')));
+
+// Platform > Master > Skills
+Route::screen('master/skills', SkillListScreen::class)
+    ->name('platform.master.skills')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Skill & Layanan', route('platform.master.skills')));
 
 // Example...
 Route::screen('example', ExampleScreen::class)

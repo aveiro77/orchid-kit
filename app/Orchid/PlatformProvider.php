@@ -78,6 +78,18 @@ class PlatformProvider extends OrchidServiceProvider
                 ->permission('platform.systems.roles')
                 ->divider(),
 
+            Menu::make('Peran Profesi')
+                ->icon('bs.briefcase')
+                ->route('platform.master.professional_roles')
+                ->permission('platform.master.professional_roles')
+                ->title('Master Data'),
+
+            Menu::make('Skill & Layanan')
+                ->icon('bs.gear')
+                ->route('platform.master.skills')
+                ->permission('platform.master.skills')
+                ->divider(),
+
             Menu::make('Documentation')
                 ->title('Docs')
                 ->icon('bs.box-arrow-up-right')
@@ -103,6 +115,10 @@ class PlatformProvider extends OrchidServiceProvider
             ItemPermission::group(__('System'))
                 ->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Users')),
+
+            ItemPermission::group('Master Data')
+                ->addPermission('platform.master.professional_roles', 'Peran Profesi')
+                ->addPermission('platform.master.skills', 'Skill & Layanan'),
         ];
     }
 }

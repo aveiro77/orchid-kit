@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Orchid\Attachment\Attachable;
 use Orchid\Filters\Types\Like;
@@ -83,4 +84,20 @@ class User extends Authenticatable
         'updated_at',
         'created_at',
     ];
+
+    /**
+     * Professional roles associated with the user.
+     */
+    public function professionalRoles(): BelongsToMany
+    {
+        return $this->belongsToMany(ProfessionalRole::class, 'professional_role_user')->withTimestamps();
+    }
+
+    /**
+     * Skills associated with the user.
+     */
+    public function skills(): BelongsToMany
+    {
+        return $this->belongsToMany(Skill::class, 'skill_user')->withTimestamps();
+    }
 }
