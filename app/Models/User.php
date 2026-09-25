@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Orchid\Filters\Types\Like;
 use Orchid\Filters\Types\Where;
 use Orchid\Filters\Types\WhereDateStartEnd;
@@ -9,6 +10,8 @@ use Orchid\Platform\Models\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -18,6 +21,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'foto',
+        'nomor_wa',
+        'kota',
+        'bio',
+        'linkedin',
+        'website',
+        'instagram',
+        'status_aktif',
     ];
 
     /**
@@ -39,6 +50,7 @@ class User extends Authenticatable
     protected $casts = [
         'permissions'          => 'array',
         'email_verified_at'    => 'datetime',
+        'status_aktif'         => 'boolean',
     ];
 
     /**
@@ -47,11 +59,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $allowedFilters = [
-           'id'         => Where::class,
-           'name'       => Like::class,
-           'email'      => Like::class,
-           'updated_at' => WhereDateStartEnd::class,
-           'created_at' => WhereDateStartEnd::class,
+        'id'           => Where::class,
+        'name'         => Like::class,
+        'email'        => Like::class,
+        'kota'         => Like::class,
+        'status_aktif' => Where::class,
+        'updated_at'   => WhereDateStartEnd::class,
+        'created_at'   => WhereDateStartEnd::class,
     ];
 
     /**
@@ -63,6 +77,8 @@ class User extends Authenticatable
         'id',
         'name',
         'email',
+        'kota',
+        'status_aktif',
         'updated_at',
         'created_at',
     ];
