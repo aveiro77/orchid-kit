@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens\Profile;
 
+use App\Models\ProfessionalRole;
+use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +14,7 @@ use Illuminate\Validation\Rule;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Cropper;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Screen;
 use Orchid\Support\Color;
@@ -28,7 +31,7 @@ class ProfileScreen extends Screen
     public function query(Request $request): iterable
     {
         return [
-            'user' => User::where('id', Auth::id())->firstOrFail(),
+            'user' => User::where('id', Auth::id())->with(['professionalRoles', 'skills'])->firstOrFail(),
         ];
     }
 
@@ -111,6 +114,18 @@ class ProfileScreen extends Screen
                     Input::make('user.instagram')
                         ->title('Instagram')
                         ->placeholder('https://instagram.com/username atau @username'),
+
+                    Relation::make('user.professionalRoles.')
+                        ->fromModel(ProfessionalRole::class, 'nama')
+                        ->multiple()
+                        ->title('Peran Profesi')
+                        ->placeholder('Pilih peran profesi Anda'),
+
+                    Relation::make('user.skills.')
+                        ->fromModel(Skill::class, 'nama')
+                        ->multiple()
+                        ->title('Skill & Layanan')
+                        ->placeholder('Pilih skill & layanan Anda'),
                 ]),
             ])
             ->title('Informasi Profil')
@@ -171,13 +186,20 @@ class ProfileScreen extends Screen
             'user.bio'       => 'nullable|string',
             'user.linkedin'  => 'nullable|string|max:255',
             'user.website'   => 'nullable|string|max:255',
-            'user.instagram' => 'nullable|string|max:255',
-            'user.foto'      => 'nullable|string',
+            'user.instagram'           => 'nullable|string|max:255',
+            'user.foto'                => 'nullable|string',
+            'user.professionalRoles'   => 'nullable|array',
+            'user.professionalRoles.*' => 'integer|exists:professional_roles,id',
+            'user.skills'              => 'nullable|array',
+            'user.skills.*'            => 'integer|exists:skills,id',
         ]);
 
         $userData = $request->get('user');
 
         $user->fill($userData)->save();
+
+        $user->professionalRoles()->sync($userData['professionalRoles'] ?? []);
+        $user->skills()->sync($userData['skills'] ?? []);
 
         Toast::info('Profil berhasil diperbarui.');
     }
