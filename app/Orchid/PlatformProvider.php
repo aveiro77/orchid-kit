@@ -78,6 +78,17 @@ class PlatformProvider extends OrchidServiceProvider
                 ->permission('platform.systems.roles')
                 ->divider(),
 
+            Menu::make('Usaha Saya')
+                ->icon('bs.shop')
+                ->route('platform.my_businesses')
+                ->title('Menu Anggota'),
+
+            Menu::make('Semua Usaha')
+                ->icon('bs.buildings')
+                ->route('platform.businesses')
+                ->permission('platform.businesses')
+                ->title('Kelola Komunitas'),
+
             Menu::make('Peran Profesi')
                 ->icon('bs.briefcase')
                 ->route('platform.master.professional_roles')
@@ -87,7 +98,12 @@ class PlatformProvider extends OrchidServiceProvider
             Menu::make('Skill & Layanan')
                 ->icon('bs.gear')
                 ->route('platform.master.skills')
-                ->permission('platform.master.skills')
+                ->permission('platform.master.skills'),
+
+            Menu::make('Kategori Usaha')
+                ->icon('bs.tags')
+                ->route('platform.master.business_categories')
+                ->permission('platform.master.business_categories')
                 ->divider(),
 
             Menu::make('Documentation')
@@ -116,9 +132,13 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.systems.roles', __('Roles'))
                 ->addPermission('platform.systems.users', __('Users')),
 
+            ItemPermission::group('Kelola Data')
+                ->addPermission('platform.businesses', 'Daftar Semua Usaha'),
+
             ItemPermission::group('Master Data')
                 ->addPermission('platform.master.professional_roles', 'Peran Profesi')
-                ->addPermission('platform.master.skills', 'Skill & Layanan'),
+                ->addPermission('platform.master.skills', 'Skill & Layanan')
+                ->addPermission('platform.master.business_categories', 'Kategori Usaha'),
         ];
     }
 }

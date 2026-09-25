@@ -19,6 +19,9 @@ use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\Profile\ProfileScreen;
 use App\Orchid\Screens\ProfessionalRole\ProfessionalRoleListScreen;
 use App\Orchid\Screens\Skill\SkillListScreen;
+use App\Orchid\Screens\BusinessCategory\BusinessCategoryListScreen;
+use App\Orchid\Screens\Business\BusinessListScreen;
+use App\Orchid\Screens\Business\MyBusinessScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
@@ -99,6 +102,27 @@ Route::screen('master/skills', SkillListScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push('Skill & Layanan', route('platform.master.skills')));
+
+// Platform > Master > Business Categories
+Route::screen('master/business-categories', BusinessCategoryListScreen::class)
+    ->name('platform.master.business_categories')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Kategori Usaha', route('platform.master.business_categories')));
+
+// Platform > Businesses (Admin)
+Route::screen('businesses', BusinessListScreen::class)
+    ->name('platform.businesses')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Daftar Semua Usaha', route('platform.businesses')));
+
+// Platform > My Businesses (Member Self-Service)
+Route::screen('my-businesses', MyBusinessScreen::class)
+    ->name('platform.my_businesses')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Usaha Saya', route('platform.my_businesses')));
 
 // Example...
 Route::screen('example', ExampleScreen::class)
