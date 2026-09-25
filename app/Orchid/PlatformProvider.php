@@ -83,11 +83,20 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.my_businesses')
                 ->title('Menu Anggota'),
 
+            Menu::make('Peluang Saya')
+                ->icon('bs.lightbulb')
+                ->route('platform.my_opportunities'),
+
             Menu::make('Semua Usaha')
                 ->icon('bs.buildings')
                 ->route('platform.businesses')
                 ->permission('platform.businesses')
                 ->title('Kelola Komunitas'),
+
+            Menu::make('Semua Peluang')
+                ->icon('bs.megaphone')
+                ->route('platform.opportunities')
+                ->permission('platform.opportunities'),
 
             Menu::make('Peran Profesi')
                 ->icon('bs.briefcase')
@@ -133,7 +142,8 @@ class PlatformProvider extends OrchidServiceProvider
                 ->addPermission('platform.systems.users', __('Users')),
 
             ItemPermission::group('Kelola Data')
-                ->addPermission('platform.businesses', 'Daftar Semua Usaha'),
+                ->addPermission('platform.businesses', 'Daftar Semua Usaha')
+                ->addPermission('platform.opportunities', 'Daftar Semua Peluang'),
 
             ItemPermission::group('Master Data')
                 ->addPermission('platform.master.professional_roles', 'Peran Profesi')
