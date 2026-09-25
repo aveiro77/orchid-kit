@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Orchid\Attachment\Attachable;
 use Orchid\Filters\Types\Like;
@@ -99,5 +100,13 @@ class User extends Authenticatable
     public function skills(): BelongsToMany
     {
         return $this->belongsToMany(Skill::class, 'skill_user')->withTimestamps();
+    }
+
+    /**
+     * Businesses owned by the user.
+     */
+    public function businesses(): HasMany
+    {
+        return $this->hasMany(Business::class);
     }
 }
