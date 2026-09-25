@@ -16,7 +16,7 @@ use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
-use App\Orchid\Screens\User\UserProfileScreen;
+use App\Orchid\Screens\Profile\ProfileScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
@@ -36,7 +36,7 @@ Route::screen('/main', PlatformScreen::class)
     ->name('platform.main');
 
 // Platform > Profile
-Route::screen('profile', UserProfileScreen::class)
+Route::screen('profile', ProfileScreen::class)
     ->name('platform.profile')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
