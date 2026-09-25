@@ -33,7 +33,7 @@ return [
      |
      */
 
-    'prefix' => env('PLATFORM_PREFIX', '/admin'),
+    'prefix' => env('PLATFORM_PREFIX', '/app'),
 
     /*
      |--------------------------------------------------------------------------
@@ -50,7 +50,7 @@ return [
 
     'middleware' => [
         'public'  => ['web', 'cache.headers:private;must_revalidate;etag'],
-        'private' => ['web', 'platform', 'cache.headers:private;must_revalidate;etag'],
+        'private' => ['web', 'platform', 'member.active', 'cache.headers:private;must_revalidate;etag'],
     ],
 
     /*
