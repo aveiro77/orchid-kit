@@ -26,6 +26,9 @@ use App\Orchid\Screens\Opportunity\OpportunityListScreen;
 use App\Orchid\Screens\Opportunity\MyOpportunityScreen;
 use App\Orchid\Screens\Referral\ReferralListScreen;
 use App\Orchid\Screens\Referral\MyReferralScreen;
+use App\Orchid\Screens\Event\EventListScreen;
+use App\Orchid\Screens\Event\EventEditScreen;
+use App\Orchid\Screens\Event\MyEventScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
@@ -155,6 +158,34 @@ Route::screen('my-referrals', MyReferralScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push('Referral Saya', route('platform.my_referrals')));
+
+// Platform > Events > Edit
+Route::screen('events/{event}/edit', EventEditScreen::class)
+    ->name('platform.events.edit')
+    ->breadcrumbs(fn (Trail $trail, $event) => $trail
+        ->parent('platform.events')
+        ->push($event->judul, route('platform.events.edit', $event)));
+
+// Platform > Events > Create
+Route::screen('events/create', EventEditScreen::class)
+    ->name('platform.events.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.events')
+        ->push('Tambah Event', route('platform.events.create')));
+
+// Platform > Events (Admin)
+Route::screen('events', EventListScreen::class)
+    ->name('platform.events')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Daftar Semua Event', route('platform.events')));
+
+// Platform > My Events (Member Self-Service)
+Route::screen('my-events', MyEventScreen::class)
+    ->name('platform.my_events')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Event Saya', route('platform.my_events')));
 
 // Example...
 Route::screen('example', ExampleScreen::class)

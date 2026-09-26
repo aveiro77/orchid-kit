@@ -91,6 +91,10 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.share')
                 ->route('platform.my_referrals'),
 
+            Menu::make('Event Saya')
+                ->icon('bs.calendar-event')
+                ->route('platform.my_events'),
+
             Menu::make('Semua Usaha')
                 ->icon('bs.buildings')
                 ->route('platform.businesses')
@@ -106,6 +110,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.diagram-3')
                 ->route('platform.referrals')
                 ->permission('platform.referrals'),
+
+            Menu::make('Semua Event')
+                ->icon('bs.calendar-check')
+                ->route('platform.events')
+                ->permission('platform.events'),
 
             Menu::make('Peran Profesi')
                 ->icon('bs.briefcase')
@@ -153,7 +162,8 @@ class PlatformProvider extends OrchidServiceProvider
             ItemPermission::group('Kelola Data')
                 ->addPermission('platform.businesses', 'Daftar Semua Usaha')
                 ->addPermission('platform.opportunities', 'Daftar Semua Peluang')
-                ->addPermission('platform.referrals', 'Daftar Semua Referral'),
+                ->addPermission('platform.referrals', 'Daftar Semua Referral')
+                ->addPermission('platform.events', 'Daftar Semua Event'),
 
             ItemPermission::group('Master Data')
                 ->addPermission('platform.master.professional_roles', 'Peran Profesi')

@@ -133,4 +133,22 @@ class User extends Authenticatable
     {
         return $this->hasMany(Referral::class, 'penerima_referral_id');
     }
+
+    /**
+     * Event registrations made by the user.
+     */
+    public function eventRegistrations(): HasMany
+    {
+        return $this->hasMany(EventRegistration::class);
+    }
+
+    /**
+     * Events attended or registered by the user.
+     */
+    public function events(): BelongsToMany
+    {
+        return $this->belongsToMany(Event::class, 'event_registrations')
+            ->withPivot('checkin_at')
+            ->withTimestamps();
+    }
 }
