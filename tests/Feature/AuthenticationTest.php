@@ -23,11 +23,11 @@ class AuthenticationTest extends TestCase
         $this->seed();
 
         $response = $this->post('/register', [
-            'name'                  => 'Test Member',
-            'email'                 => 'member@example.com',
-            'nomor_wa'              => '081234567890',
-            'kota'                  => 'Pekalongan',
-            'password'              => 'password123',
+            'name' => 'Test Member',
+            'email' => 'member@example.com',
+            'nomor_wa' => '081234567890',
+            'kota' => 'Pekalongan',
+            'password' => 'password123',
             'password_confirmation' => 'password123',
         ]);
 

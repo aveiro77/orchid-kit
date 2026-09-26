@@ -27,11 +27,11 @@ class RegisteredUserController extends Controller
     public function store(RegisterRequest $request): RedirectResponse
     {
         $user = User::create([
-            'name'         => $request->name,
-            'email'        => $request->email,
-            'password'     => Hash::make($request->password),
-            'nomor_wa'     => $request->nomor_wa,
-            'kota'         => $request->kota,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'nomor_wa' => $request->nomor_wa,
+            'kota' => $request->kota,
             'status_aktif' => true,
         ]);
 

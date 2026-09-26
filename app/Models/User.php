@@ -13,7 +13,7 @@ use Orchid\Platform\Models\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use SoftDeletes, Attachable;
+    use Attachable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -51,9 +51,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'permissions'          => 'array',
-        'email_verified_at'    => 'datetime',
-        'status_aktif'         => 'boolean',
+        'permissions' => 'array',
+        'email_verified_at' => 'datetime',
+        'status_aktif' => 'boolean',
     ];
 
     /**
@@ -62,13 +62,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $allowedFilters = [
-        'id'           => Where::class,
-        'name'         => Like::class,
-        'email'        => Like::class,
-        'kota'         => Like::class,
+        'id' => Where::class,
+        'name' => Like::class,
+        'email' => Like::class,
+        'kota' => Like::class,
         'status_aktif' => Where::class,
-        'updated_at'   => WhereDateStartEnd::class,
-        'created_at'   => WhereDateStartEnd::class,
+        'updated_at' => WhereDateStartEnd::class,
+        'created_at' => WhereDateStartEnd::class,
     ];
 
     /**

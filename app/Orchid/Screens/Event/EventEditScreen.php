@@ -6,6 +6,7 @@ namespace App\Orchid\Screens\Event;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Input;
@@ -64,7 +65,7 @@ class EventEditScreen extends Screen
     /**
      * The screen's action buttons.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {
@@ -123,9 +124,9 @@ class EventEditScreen extends Screen
                 Select::make('event.status')
                     ->title('Status Event')
                     ->options([
-                        'draft'     => 'Draft',
+                        'draft' => 'Draft',
                         'published' => 'Published',
-                        'finished'  => 'Finished',
+                        'finished' => 'Finished',
                     ])
                     ->required(),
 
@@ -142,13 +143,13 @@ class EventEditScreen extends Screen
     public function save(Event $event, Request $request)
     {
         $validated = $request->validate([
-            'event.judul'           => 'required|string|max:255',
-            'event.lokasi'          => 'required|string|max:255',
-            'event.tanggal_mulai'   => 'required|date',
+            'event.judul' => 'required|string|max:255',
+            'event.lokasi' => 'required|string|max:255',
+            'event.tanggal_mulai' => 'required|date',
             'event.tanggal_selesai' => 'required|date|after_or_equal:event.tanggal_mulai',
-            'event.kuota'           => 'required|integer|min:1',
-            'event.status'          => 'required|in:draft,published,finished',
-            'event.deskripsi'       => 'nullable|string',
+            'event.kuota' => 'required|integer|min:1',
+            'event.status' => 'required|in:draft,published,finished',
+            'event.deskripsi' => 'nullable|string',
         ]);
 
         $event->fill($validated['event'])->save();

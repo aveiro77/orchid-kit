@@ -14,13 +14,6 @@ class MemberDirectoryService
 
     /**
      * Retrieve paginated active members with optional filters.
-     *
-     * @param string|null $kota
-     * @param string|null $nama
-     * @param int|null $skillId
-     * @param int|null $roleId
-     * @param int $perPage
-     * @return LengthAwarePaginator
      */
     public function getActiveMembers(
         ?string $kota = null,
@@ -34,9 +27,6 @@ class MemberDirectoryService
 
     /**
      * Get active member detail by ID.
-     *
-     * @param int $id
-     * @return User
      */
     public function getMemberDetail(int $id): User
     {

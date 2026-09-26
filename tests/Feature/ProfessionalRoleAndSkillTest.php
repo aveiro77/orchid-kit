@@ -61,14 +61,14 @@ class ProfessionalRoleAndSkillTest extends TestCase
         $this->actingAs($admin)
             ->post(route('platform.master.professional_roles', ['method' => 'save']), [
                 'professionalRole' => [
-                    'id'   => $role->id,
+                    'id' => $role->id,
                     'nama' => 'Arsitek & Desainer Interior',
                 ],
             ])
             ->assertStatus(302);
 
         $this->assertDatabaseHas('professional_roles', [
-            'id'   => $role->id,
+            'id' => $role->id,
             'nama' => 'Arsitek & Desainer Interior',
         ]);
 
@@ -119,14 +119,14 @@ class ProfessionalRoleAndSkillTest extends TestCase
         $this->actingAs($admin)
             ->post(route('platform.master.skills', ['method' => 'save']), [
                 'skill' => [
-                    'id'   => $skill->id,
+                    'id' => $skill->id,
                     'nama' => 'Information Security',
                 ],
             ])
             ->assertStatus(302);
 
         $this->assertDatabaseHas('skills', [
-            'id'   => $skill->id,
+            'id' => $skill->id,
             'nama' => 'Information Security',
         ]);
 

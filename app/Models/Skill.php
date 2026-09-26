@@ -12,14 +12,14 @@ use Orchid\Screen\AsSource;
 
 class Skill extends Model
 {
-    use HasFactory, AsSource, Filterable;
+    use AsSource, Filterable, HasFactory;
 
     protected $fillable = [
         'nama',
     ];
 
     protected $allowedFilters = [
-        'id'   => Where::class,
+        'id' => Where::class,
         'nama' => Like::class,
     ];
 

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Orchid\Screens\Business;
 
 use App\Models\Business;
+use Illuminate\Http\Request;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
@@ -13,7 +15,6 @@ use Orchid\Screen\TD;
 use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
-use Illuminate\Http\Request;
 
 class BusinessListScreen extends Screen
 {
@@ -61,7 +62,7 @@ class BusinessListScreen extends Screen
     /**
      * The screen's action buttons.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {

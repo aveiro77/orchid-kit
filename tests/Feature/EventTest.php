@@ -14,7 +14,9 @@ class EventTest extends TestCase
     use RefreshDatabase;
 
     protected User $admin;
+
     protected User $member;
+
     protected User $anotherMember;
 
     protected function setUp(): void
@@ -81,7 +83,7 @@ class EventTest extends TestCase
                     'kuota' => 50,
                     'status' => 'published',
                     'deskripsi' => 'Pengantar Fiqih Muamalah untuk Pengusaha',
-                ]
+                ],
             ]);
 
         $response->assertRedirect(route('platform.events'));

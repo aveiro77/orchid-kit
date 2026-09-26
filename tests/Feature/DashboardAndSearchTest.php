@@ -50,33 +50,33 @@ class DashboardAndSearchTest extends TestCase
         $category = BusinessCategory::create(['nama' => 'Kuliner', 'slug' => 'kuliner']);
 
         Business::create([
-            'user_id'              => $member->id,
+            'user_id' => $member->id,
             'business_category_id' => $category->id,
-            'nama_usaha'           => 'Kedai Kopi Pekalongan',
-            'status'               => 'aktif',
+            'nama_usaha' => 'Kedai Kopi Pekalongan',
+            'status' => 'aktif',
         ]);
 
         Opportunity::create([
             'user_id' => $member->id,
-            'tipe'    => 'offer',
-            'judul'   => 'Penawaran Kerjasama Batik',
-            'status'  => 'published',
+            'tipe' => 'offer',
+            'judul' => 'Penawaran Kerjasama Batik',
+            'status' => 'published',
         ]);
 
         Referral::create([
-            'pemberi_referral_id'  => $admin->id,
+            'pemberi_referral_id' => $admin->id,
             'penerima_referral_id' => $member->id,
-            'client_name'          => 'Client A',
-            'project_name'         => 'Project X',
-            'nilai_estimasi'       => 1000000,
-            'status'               => 'introduced',
+            'client_name' => 'Client A',
+            'project_name' => 'Project X',
+            'nilai_estimasi' => 1000000,
+            'status' => 'introduced',
         ]);
 
         Event::create([
-            'judul'           => 'Kopdar Pekalongan',
-            'tanggal_mulai'   => now()->addDays(2),
+            'judul' => 'Kopdar Pekalongan',
+            'tanggal_mulai' => now()->addDays(2),
             'tanggal_selesai' => now()->addDays(2)->addHours(2),
-            'status'          => 'published',
+            'status' => 'published',
         ]);
 
         $response = $this->actingAs($admin)->get(route('platform.main'));
@@ -91,9 +91,9 @@ class DashboardAndSearchTest extends TestCase
     public function test_member_dashboard_displays_personal_summary_widgets(): void
     {
         $member = User::factory()->create([
-            'name'         => 'Budi Anggota',
+            'name' => 'Budi Anggota',
             'status_aktif' => true,
-            'kota'         => 'Pekalongan',
+            'kota' => 'Pekalongan',
         ]);
         $anggotaRole = Role::where('slug', 'anggota')->first();
         $member->roles()->attach($anggotaRole);
@@ -103,29 +103,29 @@ class DashboardAndSearchTest extends TestCase
 
         $category = BusinessCategory::create(['nama' => 'Teknologi', 'slug' => 'teknologi']);
         Business::create([
-            'user_id'              => $member->id,
+            'user_id' => $member->id,
             'business_category_id' => $category->id,
-            'nama_usaha'           => 'Budi Software House',
-            'status'               => 'aktif',
+            'nama_usaha' => 'Budi Software House',
+            'status' => 'aktif',
         ]);
 
         Opportunity::create([
             'user_id' => $member->id,
-            'tipe'    => 'need',
-            'judul'   => 'Butuh UI Designer',
-            'status'  => 'published',
+            'tipe' => 'need',
+            'judul' => 'Butuh UI Designer',
+            'status' => 'published',
         ]);
 
         $event = Event::create([
-            'judul'           => 'Seminar Bisnis Syariah',
-            'tanggal_mulai'   => now()->addDays(5),
+            'judul' => 'Seminar Bisnis Syariah',
+            'tanggal_mulai' => now()->addDays(5),
             'tanggal_selesai' => now()->addDays(5)->addHours(3),
-            'status'          => 'published',
+            'status' => 'published',
         ]);
 
         EventRegistration::create([
             'event_id' => $event->id,
-            'user_id'  => $member->id,
+            'user_id' => $member->id,
         ]);
 
         $response = $this->actingAs($member)->get(route('platform.main'));
@@ -148,16 +148,16 @@ class DashboardAndSearchTest extends TestCase
         $roleDev = ProfessionalRole::create(['nama' => 'Developer']);
 
         $member1 = User::factory()->create([
-            'name'         => 'Ahmad Pekalongan',
-            'kota'         => 'Pekalongan',
+            'name' => 'Ahmad Pekalongan',
+            'kota' => 'Pekalongan',
             'status_aktif' => true,
         ]);
         $member1->skills()->attach($skillDev);
         $member1->professionalRoles()->attach($roleDev);
 
         $member2 = User::factory()->create([
-            'name'         => 'Budi Semarang',
-            'kota'         => 'Semarang',
+            'name' => 'Budi Semarang',
+            'kota' => 'Semarang',
             'status_aktif' => true,
         ]);
         $member2->skills()->attach($skillDes);
@@ -165,7 +165,7 @@ class DashboardAndSearchTest extends TestCase
 
         // Filter by combined kota and skill
         $response = $this->get(route('members.index', [
-            'kota'  => 'Pekalongan',
+            'kota' => 'Pekalongan',
             'skill' => $skillDev->id,
         ]));
 
@@ -191,23 +191,23 @@ class DashboardAndSearchTest extends TestCase
         $user = User::factory()->create(['status_aktif' => true]);
 
         Business::create([
-            'user_id'              => $user->id,
+            'user_id' => $user->id,
             'business_category_id' => $cat1->id,
-            'nama_usaha'           => 'Batik Kuliner Pekalongan',
-            'status'               => 'aktif',
+            'nama_usaha' => 'Batik Kuliner Pekalongan',
+            'status' => 'aktif',
         ]);
 
         Business::create([
-            'user_id'              => $user->id,
+            'user_id' => $user->id,
             'business_category_id' => $cat2->id,
-            'nama_usaha'           => 'Batik Fashion Pekalongan',
-            'status'               => 'non_aktif',
+            'nama_usaha' => 'Batik Fashion Pekalongan',
+            'status' => 'non_aktif',
         ]);
 
         // Filter active & Kuliner
         $response = $this->get(route('businesses.index', [
             'kategori' => $cat1->id,
-            'status'   => 'aktif',
+            'status' => 'aktif',
         ]));
 
         $response->assertStatus(200);
@@ -231,21 +231,21 @@ class DashboardAndSearchTest extends TestCase
 
         Opportunity::create([
             'user_id' => $admin->id,
-            'tipe'    => 'need',
-            'judul'   => 'Kebutuhan Bahan Baku',
-            'status'  => 'published',
+            'tipe' => 'need',
+            'judul' => 'Kebutuhan Bahan Baku',
+            'status' => 'published',
         ]);
 
         Opportunity::create([
             'user_id' => $admin->id,
-            'tipe'    => 'offer',
-            'judul'   => 'Penawaran Produk Terbaru',
-            'status'  => 'draft',
+            'tipe' => 'offer',
+            'judul' => 'Penawaran Produk Terbaru',
+            'status' => 'draft',
         ]);
 
         $response = $this->actingAs($admin)->get(route('platform.opportunities', [
             'filter' => [
-                'tipe'   => 'need',
+                'tipe' => 'need',
                 'status' => 'published',
             ],
         ]));

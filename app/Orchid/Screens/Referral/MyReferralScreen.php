@@ -8,6 +8,7 @@ use App\Models\Referral;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Group;
@@ -35,7 +36,7 @@ class MyReferralScreen extends Screen
             'referrals' => Referral::with(['pemberi', 'penerima'])
                 ->where(function ($q) use ($userId) {
                     $q->where('pemberi_referral_id', $userId)
-                      ->orWhere('penerima_referral_id', $userId);
+                        ->orWhere('penerima_referral_id', $userId);
                 })
                 ->filters()
                 ->defaultSort('id', 'desc')
@@ -70,7 +71,7 @@ class MyReferralScreen extends Screen
     /**
      * The screen's action buttons.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {
@@ -97,6 +98,7 @@ class MyReferralScreen extends Screen
                     if ($r->pemberi_referral_id === Auth::id()) {
                         return '<strong>Saya</strong>';
                     }
+
                     return e($r->pemberi?->name ?? 'N/A');
                 }),
 
@@ -104,6 +106,7 @@ class MyReferralScreen extends Screen
                     if ($r->penerima_referral_id === Auth::id()) {
                         return '<strong>Saya</strong>';
                     }
+
                     return e($r->penerima?->name ?? 'N/A');
                 }),
 
@@ -111,26 +114,26 @@ class MyReferralScreen extends Screen
                 TD::make('project_name', 'Nama Proyek')->sort()->filter(Input::make()),
 
                 TD::make('nilai_estimasi', 'Nilai Estimasi (Rp)')->sort()->render(
-                    fn (Referral $r) => 'Rp ' . number_format((float) $r->nilai_estimasi, 0, ',', '.')
+                    fn (Referral $r) => 'Rp '.number_format((float) $r->nilai_estimasi, 0, ',', '.')
                 ),
 
                 TD::make('status', 'Status')->sort()->filter(
                     Select::make('status')
                         ->options([
-                            'introduced'  => 'Introduced',
-                            'follow_up'   => 'Follow Up',
+                            'introduced' => 'Introduced',
+                            'follow_up' => 'Follow Up',
                             'negotiation' => 'Negotiation',
-                            'won'         => 'Won',
-                            'lost'        => 'Lost',
+                            'won' => 'Won',
+                            'lost' => 'Lost',
                         ])
                         ->empty('Semua Status')
                 )->render(function (Referral $r) {
                     $badges = [
-                        'introduced'  => 'bg-info text-dark',
-                        'follow_up'   => 'bg-warning text-dark',
+                        'introduced' => 'bg-info text-dark',
+                        'follow_up' => 'bg-warning text-dark',
                         'negotiation' => 'bg-primary',
-                        'won'         => 'bg-success',
-                        'lost'        => 'bg-danger',
+                        'won' => 'bg-success',
+                        'lost' => 'bg-danger',
                     ];
                     $label = ucfirst(str_replace('_', ' ', $r->status));
                     $badgeClass = $badges[$r->status] ?? 'bg-secondary';
@@ -200,11 +203,11 @@ class MyReferralScreen extends Screen
                 Select::make('referral.status')
                     ->title('Status')
                     ->options([
-                        'introduced'  => 'Introduced',
-                        'follow_up'   => 'Follow Up',
+                        'introduced' => 'Introduced',
+                        'follow_up' => 'Follow Up',
                         'negotiation' => 'Negotiation',
-                        'won'         => 'Won',
-                        'lost'        => 'Lost',
+                        'won' => 'Won',
+                        'lost' => 'Lost',
                     ])
                     ->default('introduced')
                     ->required(),
@@ -221,11 +224,11 @@ class MyReferralScreen extends Screen
                 Select::make('referral.status')
                     ->title('Status')
                     ->options([
-                        'introduced'  => 'Introduced',
-                        'follow_up'   => 'Follow Up',
+                        'introduced' => 'Introduced',
+                        'follow_up' => 'Follow Up',
                         'negotiation' => 'Negotiation',
-                        'won'         => 'Won',
-                        'lost'        => 'Lost',
+                        'won' => 'Won',
+                        'lost' => 'Lost',
                     ])
                     ->required(),
 
@@ -272,13 +275,13 @@ class MyReferralScreen extends Screen
         $userId = Auth::id();
 
         $data = $request->validate([
-            'referral.id'                   => 'nullable|integer|exists:referrals,id',
+            'referral.id' => 'nullable|integer|exists:referrals,id',
             'referral.penerima_referral_id' => 'required_without:referral.id|nullable|integer|exists:users,id',
-            'referral.client_name'          => 'required|string|max:255',
-            'referral.project_name'         => 'required|string|max:255',
-            'referral.nilai_estimasi'       => 'nullable|numeric|min:0',
-            'referral.status'               => 'required|in:introduced,follow_up,negotiation,won,lost',
-            'referral.catatan'              => 'nullable|string',
+            'referral.client_name' => 'required|string|max:255',
+            'referral.project_name' => 'required|string|max:255',
+            'referral.nilai_estimasi' => 'nullable|numeric|min:0',
+            'referral.status' => 'required|in:introduced,follow_up,negotiation,won,lost',
+            'referral.catatan' => 'nullable|string',
         ]);
 
         $rData = $data['referral'];
@@ -287,7 +290,7 @@ class MyReferralScreen extends Screen
         if ($id) {
             $referral = Referral::where(function ($q) use ($userId) {
                 $q->where('pemberi_referral_id', $userId)
-                  ->orWhere('penerima_referral_id', $userId);
+                    ->orWhere('penerima_referral_id', $userId);
             })->findOrFail($id);
 
             // Prevent updating pemberi/penerima IDs on edit

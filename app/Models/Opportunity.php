@@ -14,7 +14,7 @@ use Orchid\Screen\AsSource;
 
 class Opportunity extends Model
 {
-    use HasFactory, SoftDeletes, AsSource, Filterable, Attachable;
+    use AsSource, Attachable, Filterable, HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -46,12 +46,12 @@ class Opportunity extends Model
      * @var array
      */
     protected $allowedFilters = [
-        'id'        => Where::class,
-        'user_id'   => Where::class,
-        'tipe'      => Where::class,
-        'judul'     => Like::class,
-        'lokasi'    => Like::class,
-        'status'    => Where::class,
+        'id' => Where::class,
+        'user_id' => Where::class,
+        'tipe' => Where::class,
+        'judul' => Like::class,
+        'lokasi' => Like::class,
+        'status' => Where::class,
     ];
 
     /**

@@ -23,12 +23,12 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'foto' => null,
-            'nomor_wa' => '08' . fake()->numerify('##########'),
+            'nomor_wa' => '08'.fake()->numerify('##########'),
             'kota' => fake()->randomElement(['Pekalongan', 'Batang', 'Pemalang', 'Kabupaten Pekalongan']),
             'bio' => fake()->paragraph(),
-            'linkedin' => 'https://linkedin.com/in/' . fake()->slug(),
-            'website' => 'https://' . fake()->domainName(),
-            'instagram' => '@' . fake()->userName(),
+            'linkedin' => 'https://linkedin.com/in/'.fake()->slug(),
+            'website' => 'https://'.fake()->domainName(),
+            'instagram' => '@'.fake()->userName(),
             'status_aktif' => true,
         ];
     }

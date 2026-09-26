@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Public\MemberDirectoryController;
 use App\Http\Controllers\Public\BusinessDirectoryController;
 use App\Http\Controllers\Public\EventController;
+use App\Http\Controllers\Public\MemberDirectoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

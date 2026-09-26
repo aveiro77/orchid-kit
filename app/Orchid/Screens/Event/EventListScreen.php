@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Orchid\Screens\Event;
 
 use App\Models\Event;
+use Illuminate\Http\Request;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Fields\Group;
@@ -15,7 +17,6 @@ use Orchid\Screen\TD;
 use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
-use Illuminate\Http\Request;
 
 class EventListScreen extends Screen
 {
@@ -63,7 +64,7 @@ class EventListScreen extends Screen
     /**
      * The screen's action buttons.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {
@@ -104,6 +105,7 @@ class EventListScreen extends Screen
                     if ($e->status === 'finished') {
                         return '<span class="badge bg-info text-dark">Finished</span>';
                     }
+
                     return '<span class="badge bg-secondary">Draft</span>';
                 }),
                 TD::make('Actions', 'Aksi')->alignRight()->render(function (Event $e) {

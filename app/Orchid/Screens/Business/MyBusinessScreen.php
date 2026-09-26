@@ -8,6 +8,7 @@ use App\Models\Business;
 use App\Models\BusinessCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Group;
@@ -65,7 +66,7 @@ class MyBusinessScreen extends Screen
     /**
      * The screen's action buttons.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {
@@ -145,7 +146,7 @@ class MyBusinessScreen extends Screen
                 Select::make('business.status')
                     ->title('Status Usaha')
                     ->options([
-                        'aktif'     => 'Aktif',
+                        'aktif' => 'Aktif',
                         'non_aktif' => 'Non-Aktif',
                     ])
                     ->required(),
@@ -174,13 +175,13 @@ class MyBusinessScreen extends Screen
     public function save(Request $request): void
     {
         $data = $request->validate([
-            'business.id'                   => 'nullable|integer|exists:businesses,id',
-            'business.nama_usaha'           => 'required|string|max:255',
+            'business.id' => 'nullable|integer|exists:businesses,id',
+            'business.nama_usaha' => 'required|string|max:255',
             'business.business_category_id' => 'required|integer|exists:business_categories,id',
-            'business.deskripsi'            => 'nullable|string',
-            'business.alamat'               => 'nullable|string|max:255',
-            'business.website'              => 'nullable|string|max:255',
-            'business.status'               => 'required|in:aktif,non_aktif',
+            'business.deskripsi' => 'nullable|string',
+            'business.alamat' => 'nullable|string|max:255',
+            'business.website' => 'nullable|string|max:255',
+            'business.status' => 'required|in:aktif,non_aktif',
         ]);
 
         $bData = $data['business'];

@@ -2,7 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Screens\Business\BusinessListScreen;
+use App\Orchid\Screens\Business\MyBusinessScreen;
+use App\Orchid\Screens\BusinessCategory\BusinessCategoryListScreen;
 use App\Orchid\Screens\Dashboard\DashboardScreen;
+use App\Orchid\Screens\Event\EventEditScreen;
+use App\Orchid\Screens\Event\EventListScreen;
+use App\Orchid\Screens\Event\MyEventScreen;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -12,23 +18,17 @@ use App\Orchid\Screens\Examples\ExampleGridScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\Opportunity\MyOpportunityScreen;
+use App\Orchid\Screens\Opportunity\OpportunityListScreen;
+use App\Orchid\Screens\ProfessionalRole\ProfessionalRoleListScreen;
+use App\Orchid\Screens\Profile\ProfileScreen;
+use App\Orchid\Screens\Referral\MyReferralScreen;
+use App\Orchid\Screens\Referral\ReferralListScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
+use App\Orchid\Screens\Skill\SkillListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
-use App\Orchid\Screens\Profile\ProfileScreen;
-use App\Orchid\Screens\ProfessionalRole\ProfessionalRoleListScreen;
-use App\Orchid\Screens\Skill\SkillListScreen;
-use App\Orchid\Screens\BusinessCategory\BusinessCategoryListScreen;
-use App\Orchid\Screens\Business\BusinessListScreen;
-use App\Orchid\Screens\Business\MyBusinessScreen;
-use App\Orchid\Screens\Opportunity\OpportunityListScreen;
-use App\Orchid\Screens\Opportunity\MyOpportunityScreen;
-use App\Orchid\Screens\Referral\ReferralListScreen;
-use App\Orchid\Screens\Referral\MyReferralScreen;
-use App\Orchid\Screens\Event\EventListScreen;
-use App\Orchid\Screens\Event\EventEditScreen;
-use App\Orchid\Screens\Event\MyEventScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
