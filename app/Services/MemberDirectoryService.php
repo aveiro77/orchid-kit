@@ -3,34 +3,33 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Repositories\Contracts\MemberRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class MemberDirectoryService
 {
+    public function __construct(
+        protected MemberRepositoryInterface $memberRepository
+    ) {}
+
     /**
      * Retrieve paginated active members with optional filters.
      *
      * @param string|null $kota
      * @param string|null $nama
+     * @param int|null $skillId
+     * @param int|null $roleId
      * @param int $perPage
      * @return LengthAwarePaginator
      */
-    public function getActiveMembers(?string $kota = null, ?string $nama = null, int $perPage = 12): LengthAwarePaginator
-    {
-        $query = User::query()
-            ->where('status_aktif', true);
-
-        if (!empty($kota)) {
-            $query->where('kota', 'like', '%' . trim($kota) . '%');
-        }
-
-        if (!empty($nama)) {
-            $query->where('name', 'like', '%' . trim($nama) . '%');
-        }
-
-        return $query->orderBy('name', 'asc')
-            ->paginate($perPage)
-            ->withQueryString();
+    public function getActiveMembers(
+        ?string $kota = null,
+        ?string $nama = null,
+        ?int $skillId = null,
+        ?int $roleId = null,
+        int $perPage = 12
+    ): LengthAwarePaginator {
+        return $this->memberRepository->getFilteredMembers($kota, $nama, $skillId, $roleId, $perPage);
     }
 
     /**

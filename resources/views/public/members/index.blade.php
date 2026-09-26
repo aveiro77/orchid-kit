@@ -13,19 +13,41 @@
     <div class="card border-0 shadow-sm mb-4">
         <div class="card-body p-4">
             <form method="GET" action="{{ route('members.index') }}" class="row g-3 align-items-end">
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <label for="nama" class="form-label fw-semibold text-secondary">Nama Anggota</label>
                     <input type="text" class="form-control" id="nama" name="nama" value="{{ $nama }}" placeholder="Cari nama anggota...">
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <label for="kota" class="form-label fw-semibold text-secondary">Kota</label>
                     <input type="text" class="form-control" id="kota" name="kota" value="{{ $kota }}" placeholder="Cari kota...">
+                </div>
+                <div class="col-md-2">
+                    <label for="peran" class="form-label fw-semibold text-secondary">Peran Profesi</label>
+                    <select class="form-select" id="peran" name="peran">
+                        <option value="">Semua Peran</option>
+                        @foreach($professionalRoles as $role)
+                            <option value="{{ $role->id }}" {{ (string)$roleId === (string)$role->id ? 'selected' : '' }}>
+                                {{ $role->nama }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="skill" class="form-label fw-semibold text-secondary">Skill / Layanan</label>
+                    <select class="form-select" id="skill" name="skill">
+                        <option value="">Semua Skill</option>
+                        @foreach($skills as $sk)
+                            <option value="{{ $sk->id }}" {{ (string)$skillId === (string)$sk->id ? 'selected' : '' }}>
+                                {{ $sk->nama }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-md-2 d-flex gap-2">
                     <button type="submit" class="btn btn-primary w-100">
                         Cari
                     </button>
-                    @if($nama || $kota)
+                    @if($nama || $kota || $skillId || $roleId)
                         <a href="{{ route('members.index') }}" class="btn btn-outline-secondary">Reset</a>
                     @endif
                 </div>
