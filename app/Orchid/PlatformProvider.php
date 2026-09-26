@@ -87,6 +87,10 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.lightbulb')
                 ->route('platform.my_opportunities'),
 
+            Menu::make('Referral Saya')
+                ->icon('bs.share')
+                ->route('platform.my_referrals'),
+
             Menu::make('Semua Usaha')
                 ->icon('bs.buildings')
                 ->route('platform.businesses')
@@ -97,6 +101,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.megaphone')
                 ->route('platform.opportunities')
                 ->permission('platform.opportunities'),
+
+            Menu::make('Semua Referral')
+                ->icon('bs.diagram-3')
+                ->route('platform.referrals')
+                ->permission('platform.referrals'),
 
             Menu::make('Peran Profesi')
                 ->icon('bs.briefcase')
@@ -143,7 +152,8 @@ class PlatformProvider extends OrchidServiceProvider
 
             ItemPermission::group('Kelola Data')
                 ->addPermission('platform.businesses', 'Daftar Semua Usaha')
-                ->addPermission('platform.opportunities', 'Daftar Semua Peluang'),
+                ->addPermission('platform.opportunities', 'Daftar Semua Peluang')
+                ->addPermission('platform.referrals', 'Daftar Semua Referral'),
 
             ItemPermission::group('Master Data')
                 ->addPermission('platform.master.professional_roles', 'Peran Profesi')
