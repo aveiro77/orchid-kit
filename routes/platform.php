@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Screens\Dashboard\DashboardScreen;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -11,7 +12,6 @@ use App\Orchid\Screens\Examples\ExampleGridScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
-use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -44,7 +44,7 @@ use Tabuna\Breadcrumbs\Trail;
 */
 
 // Main
-Route::screen('/main', PlatformScreen::class)
+Route::screen('/main', DashboardScreen::class)
     ->name('platform.main');
 
 // Platform > Profile
@@ -203,5 +203,3 @@ Route::screen('/examples/layouts', ExampleLayoutsScreen::class)->name('platform.
 Route::screen('/examples/grid', ExampleGridScreen::class)->name('platform.example.grid');
 Route::screen('/examples/charts', ExampleChartsScreen::class)->name('platform.example.charts');
 Route::screen('/examples/cards', ExampleCardsScreen::class)->name('platform.example.cards');
-
-// Route::screen('idea', Idea::class, 'platform.screens.idea');

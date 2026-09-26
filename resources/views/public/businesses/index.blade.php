@@ -13,11 +13,11 @@
     <div class="card border-0 shadow-sm mb-4">
         <div class="card-body p-4">
             <form method="GET" action="{{ route('businesses.index') }}" class="row g-3 align-items-end">
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <label for="q" class="form-label fw-semibold text-secondary">Cari Usaha</label>
                     <input type="text" class="form-control" id="q" name="q" value="{{ $search }}" placeholder="Cari nama usaha...">
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <label for="kategori" class="form-label fw-semibold text-secondary">Kategori</label>
                     <select class="form-select" id="kategori" name="kategori">
                         <option value="">Semua Kategori</option>
@@ -28,11 +28,18 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="col-md-3">
+                    <label for="status" class="form-label fw-semibold text-secondary">Status Usaha</label>
+                    <select class="form-select" id="status" name="status">
+                        <option value="aktif" {{ $status === 'aktif' ? 'selected' : '' }}>Aktif</option>
+                        <option value="non_aktif" {{ $status === 'non_aktif' ? 'selected' : '' }}>Non-Aktif</option>
+                    </select>
+                </div>
                 <div class="col-md-2 d-flex gap-2">
                     <button type="submit" class="btn btn-primary w-100">
                         Cari
                     </button>
-                    @if($search || $categoryId)
+                    @if($search || $categoryId || ($status && $status !== 'aktif'))
                         <a href="{{ route('businesses.index') }}" class="btn btn-outline-secondary">Reset</a>
                     @endif
                 </div>
@@ -50,6 +57,9 @@
                             <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill small">
                                 {{ $business->category?->nama ?? 'Umum' }}
                             </span>
+                            @if($business->status === 'non_aktif')
+                                <span class="badge bg-secondary px-2 py-1 small">Non-Aktif</span>
+                            @endif
                         </div>
 
                         <h2 class="h5 font-weight-bold text-dark mb-2">{{ $business->nama_usaha }}</h2>

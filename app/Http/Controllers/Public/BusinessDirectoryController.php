@@ -17,12 +17,16 @@ class BusinessDirectoryController extends Controller
     {
         $search = $request->query('q');
         $categoryId = $request->query('kategori');
+        $status = $request->query('status', 'aktif');
 
         $categories = BusinessCategory::orderBy('nama', 'asc')->get();
 
         $query = Business::with(['user', 'category'])
-            ->where('status', 'aktif')
             ->whereHas('user', fn ($q) => $q->where('status_aktif', true));
+
+        if ($status && in_array($status, ['aktif', 'non_aktif'])) {
+            $query->where('status', $status);
+        }
 
         if ($search) {
             $query->where('nama_usaha', 'like', "%{$search}%");
@@ -34,7 +38,7 @@ class BusinessDirectoryController extends Controller
 
         $businesses = $query->orderBy('nama_usaha', 'asc')->paginate(12)->withQueryString();
 
-        return view('public.businesses.index', compact('businesses', 'categories', 'search', 'categoryId'));
+        return view('public.businesses.index', compact('businesses', 'categories', 'search', 'categoryId', 'status'));
     }
 
     /**
