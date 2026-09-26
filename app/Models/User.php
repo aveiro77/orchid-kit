@@ -109,4 +109,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Business::class);
     }
+
+    /**
+     * Opportunities created by the user.
+     */
+    public function opportunities(): HasMany
+    {
+        return $this->hasMany(Opportunity::class);
+    }
 }

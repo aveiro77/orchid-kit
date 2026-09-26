@@ -22,6 +22,8 @@ use App\Orchid\Screens\Skill\SkillListScreen;
 use App\Orchid\Screens\BusinessCategory\BusinessCategoryListScreen;
 use App\Orchid\Screens\Business\BusinessListScreen;
 use App\Orchid\Screens\Business\MyBusinessScreen;
+use App\Orchid\Screens\Opportunity\OpportunityListScreen;
+use App\Orchid\Screens\Opportunity\MyOpportunityScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
@@ -123,6 +125,20 @@ Route::screen('my-businesses', MyBusinessScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push('Usaha Saya', route('platform.my_businesses')));
+
+// Platform > Opportunities (Admin)
+Route::screen('opportunities', OpportunityListScreen::class)
+    ->name('platform.opportunities')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Daftar Semua Peluang', route('platform.opportunities')));
+
+// Platform > My Opportunities (Member Self-Service)
+Route::screen('my-opportunities', MyOpportunityScreen::class)
+    ->name('platform.my_opportunities')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Peluang Saya', route('platform.my_opportunities')));
 
 // Example...
 Route::screen('example', ExampleScreen::class)
