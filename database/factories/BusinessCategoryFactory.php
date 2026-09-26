@@ -15,7 +15,8 @@ class BusinessCategoryFactory extends Factory
 
     public function definition(): array
     {
-        $nama = fake()->unique()->companySuffix() . ' ' . fake()->word();
+        $nama = fake()->unique()->companySuffix().' '.fake()->word();
+
         return [
             'nama' => ucfirst($nama),
             'slug' => Str::slug($nama),

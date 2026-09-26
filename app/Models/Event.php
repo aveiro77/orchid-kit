@@ -14,7 +14,7 @@ use Orchid\Screen\AsSource;
 
 class Event extends Model
 {
-    use HasFactory, SoftDeletes, AsSource, Filterable;
+    use AsSource, Filterable, HasFactory, SoftDeletes;
 
     protected $fillable = [
         'judul',
@@ -50,8 +50,8 @@ class Event extends Model
      * Allowed filter fields in Orchid tables.
      */
     protected $allowedFilters = [
-        'id'     => Where::class,
-        'judul'  => Like::class,
+        'id' => Where::class,
+        'judul' => Like::class,
         'lokasi' => Like::class,
         'status' => Where::class,
     ];

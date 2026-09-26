@@ -13,7 +13,7 @@ use Orchid\Screen\AsSource;
 
 class Referral extends Model
 {
-    use HasFactory, SoftDeletes, AsSource, Filterable;
+    use AsSource, Filterable, HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -45,12 +45,12 @@ class Referral extends Model
      * @var array
      */
     protected $allowedFilters = [
-        'id'                   => Where::class,
-        'pemberi_referral_id'  => Where::class,
+        'id' => Where::class,
+        'pemberi_referral_id' => Where::class,
         'penerima_referral_id' => Where::class,
-        'client_name'          => Like::class,
-        'project_name'         => Like::class,
-        'status'               => Where::class,
+        'client_name' => Like::class,
+        'project_name' => Like::class,
+        'status' => Where::class,
     ];
 
     /**

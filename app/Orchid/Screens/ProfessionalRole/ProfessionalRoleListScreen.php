@@ -6,6 +6,7 @@ namespace App\Orchid\Screens\ProfessionalRole;
 
 use App\Models\ProfessionalRole;
 use Illuminate\Http\Request;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Group;
@@ -58,7 +59,7 @@ class ProfessionalRoleListScreen extends Screen
     /**
      * The screen's action buttons.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {
@@ -122,7 +123,7 @@ class ProfessionalRoleListScreen extends Screen
     public function save(Request $request): void
     {
         $data = $request->validate([
-            'professionalRole.id'   => 'nullable|integer|exists:professional_roles,id',
+            'professionalRole.id' => 'nullable|integer|exists:professional_roles,id',
             'professionalRole.nama' => 'required|string|max:255',
         ]);
 

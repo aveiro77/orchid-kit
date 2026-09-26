@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Cropper;
 use Orchid\Screen\Fields\Input;
@@ -54,7 +55,7 @@ class ProfileScreen extends Screen
     /**
      * The screen's action buttons.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {
@@ -128,14 +129,14 @@ class ProfileScreen extends Screen
                         ->placeholder('Pilih skill & layanan Anda'),
                 ]),
             ])
-            ->title('Informasi Profil')
-            ->description('Perbarui foto profil, kontak, dan informasi pribadi Anda.')
-            ->commands(
-                Button::make('Simpan')
-                    ->type(Color::PRIMARY())
-                    ->icon('bs.check-circle')
-                    ->method('save')
-            ),
+                ->title('Informasi Profil')
+                ->description('Perbarui foto profil, kontak, dan informasi pribadi Anda.')
+                ->commands(
+                    Button::make('Simpan')
+                        ->type(Color::PRIMARY())
+                        ->icon('bs.check-circle')
+                        ->method('save')
+                ),
 
             Layout::block([
                 Layout::rows([
@@ -155,14 +156,14 @@ class ProfileScreen extends Screen
                         ->placeholder('Konfirmasi Password Baru'),
                 ]),
             ])
-            ->title('Ubah Password')
-            ->description('Pastikan akun Anda menggunakan password yang aman.')
-            ->commands(
-                Button::make('Ubah Password')
-                    ->type(Color::BASIC())
-                    ->icon('bs.key')
-                    ->method('changePassword')
-            ),
+                ->title('Ubah Password')
+                ->description('Pastikan akun Anda menggunakan password yang aman.')
+                ->commands(
+                    Button::make('Ubah Password')
+                        ->type(Color::BASIC())
+                        ->icon('bs.key')
+                        ->method('changePassword')
+                ),
         ];
     }
 
@@ -174,24 +175,24 @@ class ProfileScreen extends Screen
         $user = User::where('id', Auth::id())->firstOrFail();
 
         $request->validate([
-            'user.name'      => 'required|string|max:255',
-            'user.email'     => [
+            'user.name' => 'required|string|max:255',
+            'user.email' => [
                 'required',
                 'email',
                 'max:255',
                 Rule::unique(User::class, 'email')->ignore($user->id),
             ],
-            'user.nomor_wa'  => 'nullable|string|max:30',
-            'user.kota'      => 'nullable|string|max:100',
-            'user.bio'       => 'nullable|string',
-            'user.linkedin'  => 'nullable|string|max:255',
-            'user.website'   => 'nullable|string|max:255',
-            'user.instagram'           => 'nullable|string|max:255',
-            'user.foto'                => 'nullable|string',
-            'user.professionalRoles'   => 'nullable|array',
+            'user.nomor_wa' => 'nullable|string|max:30',
+            'user.kota' => 'nullable|string|max:100',
+            'user.bio' => 'nullable|string',
+            'user.linkedin' => 'nullable|string|max:255',
+            'user.website' => 'nullable|string|max:255',
+            'user.instagram' => 'nullable|string|max:255',
+            'user.foto' => 'nullable|string',
+            'user.professionalRoles' => 'nullable|array',
             'user.professionalRoles.*' => 'integer|exists:professional_roles,id',
-            'user.skills'              => 'nullable|array',
-            'user.skills.*'            => 'integer|exists:skills,id',
+            'user.skills' => 'nullable|array',
+            'user.skills.*' => 'integer|exists:skills,id',
         ]);
 
         $userData = $request->get('user');
@@ -213,8 +214,8 @@ class ProfileScreen extends Screen
         $guard = config('platform.guard', 'web');
 
         $request->validate([
-            'old_password' => 'required|current_password:' . $guard,
-            'password'     => 'required|confirmed|min:8',
+            'old_password' => 'required|current_password:'.$guard,
+            'password' => 'required|confirmed|min:8',
         ]);
 
         $user->password = Hash::make($request->get('password'));

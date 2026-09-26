@@ -7,6 +7,7 @@ namespace App\Orchid\Screens\Dashboard;
 use App\Models\Opportunity;
 use App\Repositories\Contracts\DashboardRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use Orchid\Screen\TD;
@@ -14,9 +15,6 @@ use Orchid\Support\Facades\Layout;
 
 class DashboardScreen extends Screen
 {
-    /**
-     * @var DashboardRepositoryInterface
-     */
     protected DashboardRepositoryInterface $dashboardRepository;
 
     public function __construct(DashboardRepositoryInterface $dashboardRepository)
@@ -38,29 +36,29 @@ class DashboardScreen extends Screen
             $adminMetrics = $this->dashboardRepository->getAdminMetrics();
 
             return [
-                'isAdmin'            => true,
-                'metrics'            => [
-                    'total_anggota'       => number_format((float) $adminMetrics['total_anggota']),
-                    'anggota_aktif'       => number_format((float) $adminMetrics['anggota_aktif']),
-                    'total_usaha_aktif'   => number_format((float) $adminMetrics['total_usaha_aktif']),
+                'isAdmin' => true,
+                'metrics' => [
+                    'total_anggota' => number_format((float) $adminMetrics['total_anggota']),
+                    'anggota_aktif' => number_format((float) $adminMetrics['anggota_aktif']),
+                    'total_usaha_aktif' => number_format((float) $adminMetrics['total_usaha_aktif']),
                     'total_peluang_aktif' => number_format((float) $adminMetrics['total_peluang_aktif']),
-                    'total_referral'      => number_format((float) $adminMetrics['total_referral']),
-                    'total_event'         => number_format((float) $adminMetrics['total_event']),
+                    'total_referral' => number_format((float) $adminMetrics['total_referral']),
+                    'total_event' => number_format((float) $adminMetrics['total_event']),
                 ],
-                'event_terdekat'     => $adminMetrics['event_terdekat'],
-                'peluang_terbaru'    => $adminMetrics['peluang_terbaru'],
+                'event_terdekat' => $adminMetrics['event_terdekat'],
+                'peluang_terbaru' => $adminMetrics['peluang_terbaru'],
             ];
         }
 
         $memberMetrics = $this->dashboardRepository->getMemberMetrics($user->id);
 
         return [
-            'isAdmin'         => false,
-            'user'            => $memberMetrics['user'],
-            'skills'          => $memberMetrics['skills'],
-            'usaha_aktif'     => $memberMetrics['usaha_aktif'],
-            'peluang_dibuat'  => $memberMetrics['peluang_dibuat'],
-            'event_diikuti'   => $memberMetrics['event_diikuti'],
+            'isAdmin' => false,
+            'user' => $memberMetrics['user'],
+            'skills' => $memberMetrics['skills'],
+            'usaha_aktif' => $memberMetrics['usaha_aktif'],
+            'peluang_dibuat' => $memberMetrics['peluang_dibuat'],
+            'event_diikuti' => $memberMetrics['event_diikuti'],
         ];
     }
 
@@ -93,7 +91,7 @@ class DashboardScreen extends Screen
     /**
      * The screen's action buttons.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {
@@ -117,12 +115,12 @@ class DashboardScreen extends Screen
         if ($isAdminOrPengurus) {
             return [
                 Layout::metrics([
-                    'Total Anggota'       => 'metrics.total_anggota',
-                    'Anggota Aktif'       => 'metrics.anggota_aktif',
-                    'Total Usaha Aktif'   => 'metrics.total_usaha_aktif',
+                    'Total Anggota' => 'metrics.total_anggota',
+                    'Anggota Aktif' => 'metrics.anggota_aktif',
+                    'Total Usaha Aktif' => 'metrics.total_usaha_aktif',
                     'Total Peluang Aktif' => 'metrics.total_peluang_aktif',
-                    'Total Referral'      => 'metrics.total_referral',
-                    'Total Event'         => 'metrics.total_event',
+                    'Total Referral' => 'metrics.total_referral',
+                    'Total Event' => 'metrics.total_event',
                 ]),
 
                 Layout::columns([

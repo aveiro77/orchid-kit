@@ -13,8 +13,11 @@ class ReferralTest extends TestCase
     use RefreshDatabase;
 
     protected User $admin;
+
     protected User $memberA;
+
     protected User $memberB;
+
     protected User $memberC;
 
     protected function setUp(): void
@@ -22,17 +25,17 @@ class ReferralTest extends TestCase
         parent::setUp();
 
         $adminRole = Role::create([
-            'slug'        => 'administrator',
-            'name'        => 'Administrator',
+            'slug' => 'administrator',
+            'name' => 'Administrator',
             'permissions' => [
-                'platform.index'     => true,
+                'platform.index' => true,
                 'platform.referrals' => true,
             ],
         ]);
 
         $memberRole = Role::create([
-            'slug'        => 'anggota',
-            'name'        => 'Anggota',
+            'slug' => 'anggota',
+            'name' => 'Anggota',
             'permissions' => [
                 'platform.index' => true,
             ],
@@ -44,19 +47,19 @@ class ReferralTest extends TestCase
         $this->admin->addRole($adminRole);
 
         $this->memberA = User::factory()->create([
-            'name'         => 'Member A',
+            'name' => 'Member A',
             'status_aktif' => true,
         ]);
         $this->memberA->addRole($memberRole);
 
         $this->memberB = User::factory()->create([
-            'name'         => 'Member B',
+            'name' => 'Member B',
             'status_aktif' => true,
         ]);
         $this->memberB->addRole($memberRole);
 
         $this->memberC = User::factory()->create([
-            'name'         => 'Member C',
+            'name' => 'Member C',
             'status_aktif' => true,
         ]);
         $this->memberC->addRole($memberRole);
@@ -65,13 +68,13 @@ class ReferralTest extends TestCase
     public function test_referral_model_relationships(): void
     {
         $referral = Referral::create([
-            'pemberi_referral_id'  => $this->memberA->id,
+            'pemberi_referral_id' => $this->memberA->id,
             'penerima_referral_id' => $this->memberB->id,
-            'client_name'          => 'PT Klien A',
-            'project_name'         => 'Proyek A',
-            'nilai_estimasi'       => 15000000,
-            'status'               => 'introduced',
-            'catatan'              => 'Perkenalan pertama',
+            'client_name' => 'PT Klien A',
+            'project_name' => 'Proyek A',
+            'nilai_estimasi' => 15000000,
+            'status' => 'introduced',
+            'catatan' => 'Perkenalan pertama',
         ]);
 
         $this->assertEquals('Member A', $referral->pemberi->name);
@@ -85,29 +88,29 @@ class ReferralTest extends TestCase
     {
         // Referral 1: A gives to B
         $ref1 = Referral::create([
-            'pemberi_referral_id'  => $this->memberA->id,
+            'pemberi_referral_id' => $this->memberA->id,
             'penerima_referral_id' => $this->memberB->id,
-            'client_name'          => 'Klien AB',
-            'project_name'         => 'Proyek AB',
-            'status'               => 'introduced',
+            'client_name' => 'Klien AB',
+            'project_name' => 'Proyek AB',
+            'status' => 'introduced',
         ]);
 
         // Referral 2: C gives to B
         $ref2 = Referral::create([
-            'pemberi_referral_id'  => $this->memberC->id,
+            'pemberi_referral_id' => $this->memberC->id,
             'penerima_referral_id' => $this->memberB->id,
-            'client_name'          => 'Klien CB',
-            'project_name'         => 'Proyek CB',
-            'status'               => 'follow_up',
+            'client_name' => 'Klien CB',
+            'project_name' => 'Proyek CB',
+            'status' => 'follow_up',
         ]);
 
         // Referral 3: C gives to Admin
         $ref3 = Referral::create([
-            'pemberi_referral_id'  => $this->memberC->id,
+            'pemberi_referral_id' => $this->memberC->id,
             'penerima_referral_id' => $this->admin->id,
-            'client_name'          => 'Klien CA',
-            'project_name'         => 'Proyek CA',
-            'status'               => 'negotiation',
+            'client_name' => 'Klien CA',
+            'project_name' => 'Proyek CA',
+            'status' => 'negotiation',
         ]);
 
         // Member A accesses my-referrals screen
@@ -132,34 +135,34 @@ class ReferralTest extends TestCase
         ]), [
             'referral' => [
                 'penerima_referral_id' => $this->memberB->id,
-                'client_name'          => 'PT Klien Baru',
-                'project_name'         => 'Website Modern',
-                'nilai_estimasi'       => 25000000,
-                'status'               => 'introduced',
-                'catatan'              => 'Member B berpengalaman di bidang ini',
+                'client_name' => 'PT Klien Baru',
+                'project_name' => 'Website Modern',
+                'nilai_estimasi' => 25000000,
+                'status' => 'introduced',
+                'catatan' => 'Member B berpengalaman di bidang ini',
             ],
         ]);
 
         $response->assertSessionHasNoErrors();
 
         $this->assertDatabaseHas('referrals', [
-            'pemberi_referral_id'  => $this->memberA->id,
+            'pemberi_referral_id' => $this->memberA->id,
             'penerima_referral_id' => $this->memberB->id,
-            'client_name'          => 'PT Klien Baru',
-            'project_name'         => 'Website Modern',
-            'nilai_estimasi'       => 25000000,
-            'status'               => 'introduced',
+            'client_name' => 'PT Klien Baru',
+            'project_name' => 'Website Modern',
+            'nilai_estimasi' => 25000000,
+            'status' => 'introduced',
         ]);
     }
 
     public function test_recipient_member_can_update_status_and_notes(): void
     {
         $referral = Referral::create([
-            'pemberi_referral_id'  => $this->memberA->id,
+            'pemberi_referral_id' => $this->memberA->id,
             'penerima_referral_id' => $this->memberB->id,
-            'client_name'          => 'Klien X',
-            'project_name'         => 'Proyek X',
-            'status'               => 'introduced',
+            'client_name' => 'Klien X',
+            'project_name' => 'Proyek X',
+            'status' => 'introduced',
         ]);
 
         // Member B (penerima) updates status to 'won' and adds notes
@@ -167,21 +170,21 @@ class ReferralTest extends TestCase
             'method' => 'save',
         ]), [
             'referral' => [
-                'id'             => $referral->id,
-                'client_name'    => 'Klien X',
-                'project_name'   => 'Proyek X',
+                'id' => $referral->id,
+                'client_name' => 'Klien X',
+                'project_name' => 'Proyek X',
                 'nilai_estimasi' => 10000000,
-                'status'         => 'won',
-                'catatan'        => 'Deal ditandatangani hari ini!',
+                'status' => 'won',
+                'catatan' => 'Deal ditandatangani hari ini!',
             ],
         ]);
 
         $response->assertSessionHasNoErrors();
 
         $this->assertDatabaseHas('referrals', [
-            'id'             => $referral->id,
-            'status'         => 'won',
-            'catatan'        => 'Deal ditandatangani hari ini!',
+            'id' => $referral->id,
+            'status' => 'won',
+            'catatan' => 'Deal ditandatangani hari ini!',
             'nilai_estimasi' => 10000000,
         ]);
     }
@@ -190,11 +193,11 @@ class ReferralTest extends TestCase
     {
         // Referral between A and B
         $referral = Referral::create([
-            'pemberi_referral_id'  => $this->memberA->id,
+            'pemberi_referral_id' => $this->memberA->id,
             'penerima_referral_id' => $this->memberB->id,
-            'client_name'          => 'Klien Privasi',
-            'project_name'         => 'Proyek Privasi',
-            'status'               => 'introduced',
+            'client_name' => 'Klien Privasi',
+            'project_name' => 'Proyek Privasi',
+            'status' => 'introduced',
         ]);
 
         // Member C attempts to edit/save referral
@@ -202,10 +205,10 @@ class ReferralTest extends TestCase
             'method' => 'save',
         ]), [
             'referral' => [
-                'id'           => $referral->id,
-                'client_name'  => 'Hack Name',
+                'id' => $referral->id,
+                'client_name' => 'Hack Name',
                 'project_name' => 'Hack Proyek',
-                'status'       => 'won',
+                'status' => 'won',
             ],
         ]);
 
@@ -224,11 +227,11 @@ class ReferralTest extends TestCase
     public function test_admin_can_view_and_manage_all_referrals(): void
     {
         $referral = Referral::create([
-            'pemberi_referral_id'  => $this->memberA->id,
+            'pemberi_referral_id' => $this->memberA->id,
             'penerima_referral_id' => $this->memberB->id,
-            'client_name'          => 'Klien Admin Test',
-            'project_name'         => 'Proyek Admin Test',
-            'status'               => 'introduced',
+            'client_name' => 'Klien Admin Test',
+            'project_name' => 'Proyek Admin Test',
+            'status' => 'introduced',
         ]);
 
         // Admin accesses referral list screen
@@ -241,20 +244,20 @@ class ReferralTest extends TestCase
             'method' => 'save',
         ]), [
             'referral' => [
-                'id'                   => $referral->id,
-                'pemberi_referral_id'  => $this->memberA->id,
+                'id' => $referral->id,
+                'pemberi_referral_id' => $this->memberA->id,
                 'penerima_referral_id' => $this->memberB->id,
-                'client_name'          => 'Klien Admin Test Updated',
-                'project_name'         => 'Proyek Admin Test Updated',
-                'status'               => 'follow_up',
+                'client_name' => 'Klien Admin Test Updated',
+                'project_name' => 'Proyek Admin Test Updated',
+                'status' => 'follow_up',
             ],
         ]);
 
         $responseSave->assertSessionHasNoErrors();
         $this->assertDatabaseHas('referrals', [
-            'id'          => $referral->id,
+            'id' => $referral->id,
             'client_name' => 'Klien Admin Test Updated',
-            'status'      => 'follow_up',
+            'status' => 'follow_up',
         ]);
     }
 
@@ -267,11 +270,11 @@ class ReferralTest extends TestCase
     public function test_soft_delete_referral(): void
     {
         $referral = Referral::create([
-            'pemberi_referral_id'  => $this->memberA->id,
+            'pemberi_referral_id' => $this->memberA->id,
             'penerima_referral_id' => $this->memberB->id,
-            'client_name'          => 'Klien Soft Delete',
-            'project_name'         => 'Proyek Soft Delete',
-            'status'               => 'introduced',
+            'client_name' => 'Klien Soft Delete',
+            'project_name' => 'Proyek Soft Delete',
+            'status' => 'introduced',
         ]);
 
         $response = $this->actingAs($this->memberA)->post(route('platform.my_referrals', [

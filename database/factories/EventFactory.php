@@ -18,7 +18,7 @@ class EventFactory extends Factory
         $endDate = (clone $startDate)->modify('+3 hours');
 
         return [
-            'judul' => 'Kajian & Networking: ' . fake()->catchPhrase(),
+            'judul' => 'Kajian & Networking: '.fake()->catchPhrase(),
             'deskripsi' => fake()->paragraphs(2, true),
             'lokasi' => 'Hotel Santika Pekalongan',
             'tanggal_mulai' => $startDate,

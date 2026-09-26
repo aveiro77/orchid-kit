@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\EventRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Screen\TD;
@@ -73,7 +74,7 @@ class MyEventScreen extends Screen
     /**
      * The screen's action buttons.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {
@@ -95,6 +96,7 @@ class MyEventScreen extends Screen
                     TD::make('tanggal_mulai', 'Tanggal Mulai')->render(fn (Event $e) => $e->tanggal_mulai?->format('Y-m-d H:i') ?? '-'),
                     TD::make('kuota', 'Sisa Kuota')->render(function (Event $e) {
                         $sisa = max(0, $e->kuota - $e->registrations_count);
+
                         return "{$sisa} dari {$e->kuota}";
                     }),
                     TD::make('action', 'Aksi')->alignRight()->render(function (Event $e) {
@@ -118,8 +120,8 @@ class MyEventScreen extends Screen
                     }),
                 ])
             )
-            ->title('Event Komunitas Tersedia')
-            ->description('Daftar event yang sedang dibuka untuk pendaftaran.'),
+                ->title('Event Komunitas Tersedia')
+                ->description('Daftar event yang sedang dibuka untuk pendaftaran.'),
 
             Layout::block(
                 Layout::table('myRegistrations', [
@@ -138,8 +140,8 @@ class MyEventScreen extends Screen
                     }),
                 ])
             )
-            ->title('Pendaftaran Event Saya')
-            ->description('Riwayat event yang telah Anda daftarkan.'),
+                ->title('Pendaftaran Event Saya')
+                ->description('Riwayat event yang telah Anda daftarkan.'),
         ];
     }
 
@@ -155,6 +157,7 @@ class MyEventScreen extends Screen
 
         if ($event->status !== 'published') {
             Toast::error('Event ini tidak sedang menerima pendaftaran.');
+
             return redirect()->back();
         }
 
@@ -165,12 +168,14 @@ class MyEventScreen extends Screen
 
         if ($alreadyRegistered) {
             Toast::warning('Anda sudah terdaftar pada event ini.');
+
             return redirect()->back();
         }
 
         // Cek kuota
         if ($event->registrations_count >= $event->kuota) {
             Toast::error('Pendaftaran gagal. Kuota event sudah penuh.');
+
             return redirect()->back();
         }
 

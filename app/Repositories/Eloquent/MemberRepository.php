@@ -18,21 +18,21 @@ class MemberRepository implements MemberRepositoryInterface
         $query = User::query()
             ->where('status_aktif', true);
 
-        if (!empty($kota)) {
-            $query->where('kota', 'like', '%' . trim($kota) . '%');
+        if (! empty($kota)) {
+            $query->where('kota', 'like', '%'.trim($kota).'%');
         }
 
-        if (!empty($nama)) {
-            $query->where('name', 'like', '%' . trim($nama) . '%');
+        if (! empty($nama)) {
+            $query->where('name', 'like', '%'.trim($nama).'%');
         }
 
-        if (!empty($skillId)) {
+        if (! empty($skillId)) {
             $query->whereHas('skills', function ($q) use ($skillId) {
                 $q->where('skills.id', $skillId);
             });
         }
 
-        if (!empty($roleId)) {
+        if (! empty($roleId)) {
             $query->whereHas('professionalRoles', function ($q) use ($roleId) {
                 $q->where('professional_roles.id', $roleId);
             });

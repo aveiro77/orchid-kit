@@ -7,6 +7,7 @@ namespace App\Orchid\Screens\Opportunity;
 use App\Models\Opportunity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\DateTimer;
@@ -64,7 +65,7 @@ class MyOpportunityScreen extends Screen
     /**
      * The screen's action buttons.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {
@@ -89,15 +90,15 @@ class MyOpportunityScreen extends Screen
                 TD::make('tipe', 'Tipe')->sort()->filter(
                     Select::make('tipe')
                         ->options([
-                            'need'        => 'Need',
-                            'offer'       => 'Offer',
+                            'need' => 'Need',
+                            'offer' => 'Offer',
                             'collaborate' => 'Collaborate',
                         ])
                         ->empty('Semua Tipe')
                 )->render(function (Opportunity $o) {
                     $badges = [
-                        'need'        => 'bg-danger',
-                        'offer'       => 'bg-success',
+                        'need' => 'bg-danger',
+                        'offer' => 'bg-success',
                         'collaborate' => 'bg-info text-dark',
                     ];
                     $label = ucfirst($o->tipe);
@@ -113,16 +114,16 @@ class MyOpportunityScreen extends Screen
                 TD::make('status', 'Status')->sort()->filter(
                     Select::make('status')
                         ->options([
-                            'draft'     => 'Draft',
+                            'draft' => 'Draft',
                             'published' => 'Published',
-                            'closed'    => 'Closed',
+                            'closed' => 'Closed',
                         ])
                         ->empty('Semua Status')
                 )->render(function (Opportunity $o) {
                     $badges = [
-                        'draft'     => 'bg-secondary',
+                        'draft' => 'bg-secondary',
                         'published' => 'bg-primary',
-                        'closed'    => 'bg-dark',
+                        'closed' => 'bg-dark',
                     ];
                     $label = ucfirst($o->status);
                     $badgeClass = $badges[$o->status] ?? 'bg-secondary';
@@ -154,8 +155,8 @@ class MyOpportunityScreen extends Screen
                 Select::make('opportunity.tipe')
                     ->title('Tipe Peluang')
                     ->options([
-                        'need'        => 'Need (Kebutuhan)',
-                        'offer'       => 'Offer (Penawaran)',
+                        'need' => 'Need (Kebutuhan)',
+                        'offer' => 'Offer (Penawaran)',
                         'collaborate' => 'Collaborate (Kolaborasi)',
                     ])
                     ->required(),
@@ -177,9 +178,9 @@ class MyOpportunityScreen extends Screen
                 Select::make('opportunity.status')
                     ->title('Status')
                     ->options([
-                        'draft'     => 'Draft',
+                        'draft' => 'Draft',
                         'published' => 'Published',
-                        'closed'    => 'Closed',
+                        'closed' => 'Closed',
                     ])
                     ->required(),
             ]))->title('Peluang Saya')->async('asyncGetOpportunity'),
@@ -206,13 +207,13 @@ class MyOpportunityScreen extends Screen
     public function save(Request $request): void
     {
         $data = $request->validate([
-            'opportunity.id'              => 'nullable|integer|exists:opportunities,id',
-            'opportunity.tipe'            => 'required|in:need,offer,collaborate',
-            'opportunity.judul'           => 'required|string|max:255',
-            'opportunity.deskripsi'       => 'nullable|string',
-            'opportunity.lokasi'          => 'nullable|string|max:255',
+            'opportunity.id' => 'nullable|integer|exists:opportunities,id',
+            'opportunity.tipe' => 'required|in:need,offer,collaborate',
+            'opportunity.judul' => 'required|string|max:255',
+            'opportunity.deskripsi' => 'nullable|string',
+            'opportunity.lokasi' => 'nullable|string|max:255',
             'opportunity.tanggal_expired' => 'nullable|date',
-            'opportunity.status'          => 'required|in:draft,published,closed',
+            'opportunity.status' => 'required|in:draft,published,closed',
         ]);
 
         $oData = $data['opportunity'];

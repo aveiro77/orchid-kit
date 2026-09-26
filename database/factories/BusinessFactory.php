@@ -22,7 +22,7 @@ class BusinessFactory extends Factory
             'nama_usaha' => fake()->company(),
             'deskripsi' => fake()->paragraph(),
             'alamat' => fake()->address(),
-            'website' => 'https://' . fake()->domainName(),
+            'website' => 'https://'.fake()->domainName(),
             'status' => 'aktif',
         ];
     }

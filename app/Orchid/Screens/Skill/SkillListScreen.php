@@ -6,6 +6,7 @@ namespace App\Orchid\Screens\Skill;
 
 use App\Models\Skill;
 use Illuminate\Http\Request;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Group;
@@ -58,7 +59,7 @@ class SkillListScreen extends Screen
     /**
      * The screen's action buttons.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {
@@ -122,7 +123,7 @@ class SkillListScreen extends Screen
     public function save(Request $request): void
     {
         $data = $request->validate([
-            'skill.id'   => 'nullable|integer|exists:skills,id',
+            'skill.id' => 'nullable|integer|exists:skills,id',
             'skill.nama' => 'required|string|max:255',
         ]);
 

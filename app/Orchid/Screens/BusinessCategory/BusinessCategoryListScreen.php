@@ -7,6 +7,7 @@ namespace App\Orchid\Screens\BusinessCategory;
 use App\Models\BusinessCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Group;
@@ -59,7 +60,7 @@ class BusinessCategoryListScreen extends Screen
     /**
      * The screen's action buttons.
      *
-     * @return \Orchid\Screen\Action[]
+     * @return Action[]
      */
     public function commandBar(): iterable
     {
@@ -127,14 +128,14 @@ class BusinessCategoryListScreen extends Screen
     public function save(Request $request): void
     {
         $data = $request->validate([
-            'category.id'   => 'nullable|integer|exists:business_categories,id',
+            'category.id' => 'nullable|integer|exists:business_categories,id',
             'category.nama' => 'required|string|max:255',
             'category.slug' => 'nullable|string|max:255',
         ]);
 
         $catData = $data['category'];
         $id = $catData['id'] ?? null;
-        $slug = !empty($catData['slug']) ? Str::slug($catData['slug']) : Str::slug($catData['nama']);
+        $slug = ! empty($catData['slug']) ? Str::slug($catData['slug']) : Str::slug($catData['nama']);
 
         BusinessCategory::updateOrCreate(
             ['id' => $id],
