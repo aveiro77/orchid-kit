@@ -117,4 +117,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(Opportunity::class);
     }
+
+    /**
+     * Referrals given by the user.
+     */
+    public function referralsGiven(): HasMany
+    {
+        return $this->hasMany(Referral::class, 'pemberi_referral_id');
+    }
+
+    /**
+     * Referrals received by the user.
+     */
+    public function referralsReceived(): HasMany
+    {
+        return $this->hasMany(Referral::class, 'penerima_referral_id');
+    }
 }

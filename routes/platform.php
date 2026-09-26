@@ -24,6 +24,8 @@ use App\Orchid\Screens\Business\BusinessListScreen;
 use App\Orchid\Screens\Business\MyBusinessScreen;
 use App\Orchid\Screens\Opportunity\OpportunityListScreen;
 use App\Orchid\Screens\Opportunity\MyOpportunityScreen;
+use App\Orchid\Screens\Referral\ReferralListScreen;
+use App\Orchid\Screens\Referral\MyReferralScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
@@ -139,6 +141,20 @@ Route::screen('my-opportunities', MyOpportunityScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push('Peluang Saya', route('platform.my_opportunities')));
+
+// Platform > Referrals (Admin)
+Route::screen('referrals', ReferralListScreen::class)
+    ->name('platform.referrals')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Daftar Semua Referral', route('platform.referrals')));
+
+// Platform > My Referrals (Member Self-Service)
+Route::screen('my-referrals', MyReferralScreen::class)
+    ->name('platform.my_referrals')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push('Referral Saya', route('platform.my_referrals')));
 
 // Example...
 Route::screen('example', ExampleScreen::class)
