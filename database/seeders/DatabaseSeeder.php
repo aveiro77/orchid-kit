@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ProfessionalRoleSeeder::class,
             SkillSeeder::class,
             BusinessCategorySeeder::class,
+            DummyDataSeeder::class,
         ]);
     }
 }
